@@ -19,6 +19,16 @@ const Article = mongoose.model("Article", articleSchema);
 
 app.get("/", function (req, res) {});
 
+app.get("/articles", function (req, res) {
+  Article.find(function (err, foundArticles) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(foundArticles);
+    }
+  });
+});
+
 app.listen(3000, function () {
   console.log("Server Started successfully");
 });
