@@ -19,6 +19,8 @@ const Article = mongoose.model("Article", articleSchema);
 
 app.get("/", function (req, res) {});
 
+//All articles
+
 app
   .route("/articles")
   .get(function (req, res) {
@@ -53,6 +55,25 @@ app
       }
     });
   });
+
+//A specific article
+
+app.route("/articles/:articleTitle").get(function (req, res) {
+  Article.findOne(
+    { title: req.params.articleTitle },
+    function (err, foundArticle) {
+      if (!err) {
+        if (foundArticle) {
+          res.send(foundArticle);
+        } else {
+          res.send("No article found for this name");
+        }
+      } else {
+        res.send(err);
+      }
+    }
+  );
+});
 
 app.listen(3000, function () {
   console.log("Server Started successfully");
